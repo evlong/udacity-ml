@@ -11967,7 +11967,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO: Total number of records</span>
@@ -11980,7 +11980,7 @@ div#notebook {
 <span class="n">n_at_most_50k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">income</span><span class="o">==</span><span class="s1">&#39;&lt;=50K&#39;</span><span class="p">])</span>
 
 <span class="c1"># TODO: Percentage of individuals whose income is more than $50,000</span>
-<span class="n">greater_percent</span> <span class="o">=</span> <span class="n">n_greater_50k</span><span class="o">/</span><span class="n">n_records</span>
+<span class="n">greater_percent</span> <span class="o">=</span> <span class="n">n_greater_50k</span><span class="o">*</span><span class="mi">100</span><span class="o">/</span><span class="n">n_records</span>
 
 <span class="c1"># Print the results</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total number of records: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_records</span><span class="p">))</span>
@@ -12004,7 +12004,7 @@ div#notebook {
 <pre>Total number of records: 45222
 Individuals making more than $50,000: 11208
 Individuals making at most $50,000: 34014
-Percentage of individuals making more than $50,000: 0.2478439697492371%
+Percentage of individuals making more than $50,000: 24.78439697492371%
 </pre>
 </div>
 </div>
@@ -14226,8 +14226,10 @@ Look at the graph at the bottom left from the cell above(the visualization creat
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer: </strong> The random forest model randomly is a combination of decision trees, so firstly we need to explain how the decision tree works. The learning process of the decision tree is based on the data it received. A decision tree takes a first feature and ask a 'yes/no' question, then enters second node based on the answer to the previous question and ask the question about the second feature, makes a decision. The process repeats for each feature and eventually it reaches a conclusion, in our case, whether the donor earns &gt;50k or not based on answering the 'yes/no' question of the donor's features. As we give a subsset part of the data as the training set, the decision tree will learn from the relationship between the features as well as between features and outcome for donors in the training dataset, each branch of the tree would reflect the information learnt. It will then predict the outcome on the test set from the trees.</p>
-<p>The random forest model combines the knowledge of many decision trees. One decision tree's logic may not be accurate as the outcome depends on how the tree is built, e.g. which features are being asked and seen as more important, but by combining many decision trees together the model can incorporate more knowledge and generalises the patterns, so that it may provide a more robust and accurate prediction on the outcome. It will weigh the prediction of each decision tree and add them together to generate a strong prediction.</p>
+<p><strong>Answer: </strong> The random forest model randomly is a combination of decision trees, so firstly we need to explain how the decision tree works. The learning process of the decision tree is based on the data it received. A decision tree chooses the best features that can separate the data and ask a 'yes/no' question, then enters second node based on the answer to the previous question and ask the question about the second best feature (could be the same feature as the first one), makes a decision. The process repeats for each feature and eventually it reaches a conclusion, in our case, whether the donor earns &gt;50k or not based on answering the 'yes/no' question of the donor's features. As we give a subsset part of the data as the training set, the decision tree will learn from the relationship between the features as well as between features and outcome for donors in the training dataset, each branch of the tree would reflect the information learnt. It will then predict the outcome on the test set from the trees.</p>
+<p>The random forest model combines the knowledge of many decision trees. As one decision tree's logic may not be accurate as the outcome depends on how the tree is built, e.g. which features are being asked and seen as more important, but by combining many decision trees together the model can incorporate more knowledge and generalises the patterns, so that it may provide a more robust and accurate prediction on the outcome.</p>
+<p>In terms of training the model, for each of the tree in random forest model, a sample of data and and a subset of features are taken at random. For example, one decision tree will choose the best features from the subset of features that give most information about the data it saw for separation, say education and age. Another decision tree might choose marriage status. By default, a Random Forest will use the sqaure root of the number of features as the maximum features that it will look on any given branch. In our case we have total 13 features, so each decision will be the best of the 4(approximate) randomly selected features available.</p>
+<p>To combine the results of the trees, a majority voting takes place for all trees and the final decision is taken for the prediction. This technique combines weak classifiers to 1 strong classifer.</p>
 
 </div>
 </div>
